@@ -7,7 +7,11 @@ export default {
     './components/**/*.{html,js}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage:{
+        'imagen-fondo': "url('./fondos/fondo1.jpg')"
+      }
+    },
   },
   plugins: [],
 }

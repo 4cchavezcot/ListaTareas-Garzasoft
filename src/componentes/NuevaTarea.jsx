@@ -8,13 +8,13 @@ function NuevaTarea({ AgregarTarea }) {
   const [colorSeleccionado, setColorSeleccionado] = useState("");
 
   const manejarBoton = (evento) => {
-    evento.preventDefault(); //Evitar que se vuelva a recargar la página
+    evento.preventDefault(); //Evita que se vuelva a recargar la página
     if (
-      nombreTarea.trim() !== "" ||
-      descripcionTarea.trim() !== "" ||
+      nombreTarea.trim() !== "" &&
+      descripcionTarea.trim() !== "" &&
       colorSeleccionado !== ""
     ) {
-      const ididTarea = uuidv4(); // Verifica si no son cadenas vacias
+      const idTarea = uuidv4(); // Verificando si no son cadenas vacias
       AgregarTarea({
         idTarea,
         nombreTarea,
@@ -31,7 +31,7 @@ function NuevaTarea({ AgregarTarea }) {
   };
   return (
     <form
-      className="bg-purple-200 justify-center p-2 rounded"
+      className="bg-purple-200 justify-center p-2 rounded shadow-xl"
       onSubmit={manejarBoton}
     >
       <h1 className="font-bold text-center text-xl py-2">Nueva Tarea</h1>
@@ -65,50 +65,59 @@ function NuevaTarea({ AgregarTarea }) {
       </div>
       <h1 className="font-bold m-1 py-1 pl-1 text-base">Card Color</h1>
       {/*El usuario podrá elegir el color de la tarjeta para la nueva tarea*/}
-      <div className="justify-center sm:flex">
+      <div className="justify-center flex">
         <BotonCardColor
           className="bg-green-200"
           onClick={() => setColorSeleccionado("bg-green-200")}
+          seleccion={colorSeleccionado}
         />
 
         <BotonCardColor
           className="bg-fuchsia-300"
           onClick={() => setColorSeleccionado("bg-fuchsia-300")}
+          seleccion={colorSeleccionado}
         />
 
         <BotonCardColor
           className="bg-red-200"
           onClick={() => setColorSeleccionado("bg-red-200")}
+          seleccion={colorSeleccionado}
         />
 
         <BotonCardColor
           className="bg-sky-200"
           onClick={() => setColorSeleccionado("bg-sky-200")}
+          seleccion={colorSeleccionado}
         />
 
         <BotonCardColor
           className="bg-yellow-200"
           onClick={() => setColorSeleccionado("bg-yellow-200")}
+          seleccion={colorSeleccionado}
         />
 
         <BotonCardColor
           className="bg-lime-300"
           onClick={() => setColorSeleccionado("bg-lime-300")}
+          seleccion={colorSeleccionado}
         />
 
         <BotonCardColor
           className="bg-cyan-300"
           onClick={() => setColorSeleccionado("bg-cyan-300")}
+          seleccion={colorSeleccionado}
         />
 
         <BotonCardColor
           className="bg-blue-300"
           onClick={() => setColorSeleccionado("bg-blue-300")}
+          seleccion={colorSeleccionado}
         />
 
         <BotonCardColor
           className="bg-red-300"
           onClick={() => setColorSeleccionado("bg-red-300")}
+          seleccion={colorSeleccionado}
         />
       </div>
     </form>
