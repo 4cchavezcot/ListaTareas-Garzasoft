@@ -1,11 +1,13 @@
+import { useTaskStore } from "@/storages/tareaStorage";
 import { BotonCardColor } from "./BotonCardColor";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid"; //Libreria para crear un ID unico
 
-function NuevaTarea({ AgregarTarea }) {
+function NuevaTarea() {
   const [nombreTarea, setNombre] = useState("");
   const [descripcionTarea, setDescripcion] = useState("");
   const [colorSeleccionado, setColorSeleccionado] = useState("");
+  const { addTask } = useTaskStore();
 
   const manejarBoton = (evento) => {
     evento.preventDefault(); //Evita que se vuelva a recargar la página
@@ -15,13 +17,13 @@ function NuevaTarea({ AgregarTarea }) {
       colorSeleccionado !== ""
     ) {
       const idTarea = uuidv4(); // Verificando si no son cadenas vacias
-      AgregarTarea({
+      addTask({
         idTarea,
         nombreTarea,
         descripcionTarea,
         colorSeleccionado,
         completadaTarea: false,
-      });
+      })
 
       // Limpiar los campos después de agregar una nueva tarea
       setNombre("");
