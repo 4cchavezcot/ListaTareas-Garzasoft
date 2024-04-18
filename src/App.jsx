@@ -1,58 +1,42 @@
 import Tarea from "./componentes/Tarea";
 import NuevaTarea from "./componentes/NuevaTarea";
-import { useState } from "react";
+//import { useState } from "react";
+import useTareaStorage from "./storages/tareaStorage";
 
 function App() {
-  const [tareas, setTareas] = useState([]);
-
+  //const [tareas, setTareas] = useState([]);
+  const tareas1 = useTareaStorage((state) => state.tareas);
+  //const { tareas } = useTareaStorage();
   //Agregar nueva tarea
-  const agregarTarea = (tarea) => {
-    setTareas([...tareas, tarea]);
+  const agregarTarea1 = (tarea) => {
+    useTareaStorage((state) => state.agregarTarea(tarea));
   };
 
   //Completar tarea
-  const completarTarea = (idTarea) => {
-    const actualizarLista = tareas.map((tarea) => {
-      if (tarea.idTarea === idTarea) {
-        tarea.completadaTarea = !tarea.completadaTarea;
-      }
-      return tarea;
-    });
-    setTareas(actualizarLista);
+  const completarTarea1 = (idTarea) => {
+    useTareaStorage((state) => state.completarTarea(idTarea));
   };
 
   //Editar tarea
-  const editarTarea = (idTarea, nombreNuevo, descripcionNueva) => {
-    const listaActualizada = tareas.map((tarea) => {
-      if (tarea.idTarea === idTarea) {
-        tarea.nombreTarea = nombreNuevo;
-        tarea.descripcionTarea = descripcionNueva;
-      }
-      return tarea;
-    });
-    setTareas(listaActualizada);
+  const editarTarea1 = (idTarea, nombreNuevo, descripcionNueva) => {
+    useTareaStorage((state) =>
+      state.editarTarea(idTarea, nombreNuevo, descripcionNueva)
+    );
   };
 
   //Eliminar tarea
-  const eliminarTarea = (idTarea) => {
-    const actualizarLista = tareas.filter((tarea) => tarea.idTarea !== idTarea);
-    setTareas(actualizarLista);
+  const eliminarTarea1 = (idTarea) => {
+    useTareaStorage((state) => state.eliminarTarea(idTarea));
   };
 
   //Tareas pendientes
-  const tareasPendientes = (tareas) => {
-    const actualizarLista = tareas.filter(
-      (tarea) => tarea.completadaTarea === false
-    );
-    return actualizarLista.length;
+  const tareasPendientes1 = () => {
+    useTareaStorage((state) => state.tareasPendientes());
   };
 
   //Tareas completadas
-  const tareasCompletadas = (tareas) => {
-    const actualizarLista = tareas.filter(
-      (tarea) => tarea.completadaTarea === true
-    );
-    return actualizarLista.length;
+  const tareasCompletadas1 = () => {
+    useTareaStorage((state) => state.tareasCompletadas());
   };
 
   return (
@@ -68,12 +52,12 @@ function App() {
         </h1>
         <div className="lg:flex lg:space-x-10">
           <div className="justify-start m-5 space-y-1">
-            <NuevaTarea AgregarTarea={agregarTarea} />
+            <NuevaTarea AgregarTarea={agregarTarea1} />
             <div className="flex justify-center space-x-9">
               <div className="flex items-center py-2">
                 <p className="text-sm font-bold pr-4 pl-2">Total pendientes</p>
                 <div className="bg-red-500 text-white font-bold px-6 py-4 rounded">
-                  {tareasPendientes(tareas)}
+                  {tareasPendientes1()}
                 </div>
               </div>
               <div className="flex items-center py-2">
@@ -81,13 +65,13 @@ function App() {
                   Tareas completadas
                 </p>
                 <div className="bg-red-500 text-white font-bold px-6 py-4 rounded">
-                  {tareasCompletadas(tareas)}
+                  {tareasCompletadas1()}
                 </div>
               </div>
             </div>
           </div>
           <div className="justify-start m-5 min-w-96 relative space-y-3">
-            {tareas.map((tarea) => (
+            {tareas1.map((tarea) => (
               <Tarea
                 key={tarea.idTarea}
                 idTarea={tarea.idTarea}
@@ -95,9 +79,9 @@ function App() {
                 descripcionTarea={tarea.descripcionTarea}
                 colorSeleccionado={tarea.colorSeleccionado}
                 completadaTarea={tarea.completadaTarea}
-                editarTarea={editarTarea}
-                completarTarea={completarTarea}
-                eliminarTarea={eliminarTarea}
+                editarTarea={editarTarea1}
+                completarTarea={completarTarea1}
+                eliminarTarea={eliminarTarea1}
               />
             ))}
           </div>
