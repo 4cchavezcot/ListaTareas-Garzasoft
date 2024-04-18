@@ -1,19 +1,19 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 const useTareaStorage = create(
   persist(
     (set) => ({
       tareas: [],
-      agregarTarea: (tarea) => 
-        set((state) => ({ 
-            tareas: [...state.tareas, tarea] 
+      agregarTarea: (tarea) =>
+        set((state) => ({
+          tareas: [...state.tareas, tarea]
         })),
 
-      completarTarea: (idTarea) => 
+      completarTarea: (idTarea) =>
         set((state) => ({
-            tareas: state.tareas.map((tarea) => 
-                tarea.idTarea === idTarea ? {...tarea, completadaTarea: !tarea.completadaTarea} : tarea)
+          tareas: state.tareas.map((tarea) =>
+            tarea.idTarea === idTarea ? { ...tarea, completadaTarea: !tarea.completadaTarea } : tarea)
         })),
 
       editarTarea: (idTarea, nombreNuevo, descripcionNueva) =>
@@ -27,21 +27,21 @@ const useTareaStorage = create(
         set((state) => ({
           tareas: state.tareas.filter((tarea) => tarea.id !== idTarea),
         })),
-      
-      tareasPendientes: () => 
+
+      tareasPendientes: () =>
         set((state) => ({
           numero: state.tareas.filter((tarea) => tarea.completadaTarea === false).length,
         })),
-      
-      tareasCompletadas: () => 
-      set((state) => ({
-        numero: state.tareas.filter((tarea) => tarea.completadaTarea === true).length,
-      })) 
+
+      tareasCompletadas: () =>
+        set((state) => ({
+          numero: state.tareas.filter((tarea) => tarea.completadaTarea === true).length,
+        }))
     }),
     {
       name: 'tarea-storage', // Nombre para identificar la persistencia
-      storage: createJSONStorage(()=> localStorage), // Utilizamos localStorage
-      partialize: (state) => ({tareas: state.tareas})
+      storage: createJSONStorage(() => localStorage), // Utilizamos localStorage
+      partialize: (state) => ({ tareas: state.tareas })
     }
   )
 );
